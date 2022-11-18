@@ -1,5 +1,18 @@
 module MetXMC
 
-# Write your package code here.
+    using LinearAlgebra
+    using SparseArrays, JuMP, GLPK
+    using MetXBase
+    using MetXBase: _dense
+    using MetXOptim
+    using Random
+
+    #! include Types
+    include("Types/MetHRModel.jl")
+    
+    #! include MetHRModelUtils
+    include("MetHRModelUtils/sample.jl")
+
+    #! include .
 
 end
