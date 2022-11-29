@@ -7,8 +7,7 @@ struct MetHRModel{T<: AbstractFloat}
     x::Vector{T}
     v::Vector{T}
     base::Matrix{T}
-    rng::MersenneTwister
-
+    rng::Random.AbstractRNG
 
     # extras
     extras::Dict
