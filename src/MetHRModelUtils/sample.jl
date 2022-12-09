@@ -1,11 +1,12 @@
 ## ------------------------------------------------------------------
-function _sample!(hrm::MetHRModel, rng)
+function _sample!(hrm::MetHRModel{T}, rng) where {T}
     
-    x = hrm.x
-    v = hrm.v
-    base = hrm.base
-    lb = hrm.net.lb
-    ub = hrm.net.ub
+    x::Vector{T} = hrm.x
+    dx::Vector{T} = hrm.dx
+    v::Vector{T} = hrm.v
+    base::Matrix{T} = hrm.base
+    lb::Vector{T} = hrm.net.lb
+    ub::Vector{T} = hrm.net.ub
     
     # preprocessing: find base
     n = length(v)
@@ -13,13 +14,35 @@ function _sample!(hrm::MetHRModel, rng)
 
     # pick a random direction
     v .= base * randn(rng, k)
-    dx = v/norm(v)
+    dx .= v / norm(v)
     # compute intersection
-    l = maximum(min((lb[i]-x[i])/dx[i], (ub[i]-x[i])/dx[i]) for i=1:n if dx[i] != 0)
-    u = minimum(max((lb[i]-x[i])/dx[i], (ub[i]-x[i])/dx[i]) for i=1:n if dx[i] != 0)
+    @inbounds l::T = maximum(
+        min(
+            (lb[i]-x[i])/dx[i], 
+            (ub[i]-x[i])/dx[i]
+        ) 
+        for i=1:n if !iszero(dx[i])
+    )
+    @inbounds u::T = minimum(
+        max(
+            (lb[i]-x[i])/dx[i], 
+            (ub[i]-x[i])/dx[i]
+        ) 
+        for i=1:n if !iszero(dx[i])
+    )
+
+    # l, u = -Inf, Inf
+    # @inbounds for i in 1:n
+    #     dx[i] == 0 && continue
+    #     _l = (lb[i]-x[i])/dx[i]
+    #     _u = (ub[i]-x[i])/dx[i]
+    #     l = max(l, min(_l, _u))
+    #     u = min(u, max(_l, _u))
+    # end
+
     # find a random point in the intersection
     t = l + (u-l) * rand(rng)
-    x .+= t * dx
+    x .+= t * dx * 1e-3
     return x
 end
 
@@ -57,16 +80,19 @@ end
 
 ## ------------------------------------------------------------------
 export sample!
-function sample!(hrm::MetHRModel; 
+import Distributions.sample!
+function sample!(hrm::MetHRModel, nsamples::Int; 
         dt::Int = 3, 
-        nsamples = 1,
         rng = hrm.rng,
         rxns = nothing
     ) 
     rxns = isnothing(rxns) ? rxns : rxnindex(hrm.net, rxns)
-    return nsamples == 1 ? 
-        _sample!(hrm, rxns, rng) : 
-        _sample!(hrm, rxns, nsamples, dt, rng)
+    return _sample!(hrm, rxns, nsamples, dt, rng)
+end
+
+function sample!(hrm::MetHRModel; rxns = nothing, rng = hrm.rng)
+    rxns = isnothing(rxns) ? rxns : rxnindex(hrm.net, rxns)
+    return _sample!(hrm, rxns, rng)
 end
 
 ## ------------------------------------------------------------------

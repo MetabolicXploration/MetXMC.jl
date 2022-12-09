@@ -7,6 +7,8 @@ module MetXMC
     using MetXOptim
     using Random
 
+    import Distributions
+
     #! include Types
     include("Types/MetHRModel.jl")
     
