@@ -1,5 +1,6 @@
-export MetHRModel
-struct MetHRModel{T<: AbstractFloat}
+
+export HRModel
+struct HRModel{T}
     # net
     net::MetNet
 
@@ -14,12 +15,12 @@ struct MetHRModel{T<: AbstractFloat}
     extras::Dict
 end
 
-function MetHRModel(net::MetNet, jump_args...; rng = Random.GLOBAL_RNG)
+function HRModel(net::MetNet, jump_args...; rng = Random.GLOBAL_RNG)
 
     x = warmup(net.S, net.b, net.lb, net.ub, jump_args...)
     dx = zeros(length(x))
     v = zeros(length(x))
     base = nullspace(_dense(net.S))
     
-    return MetHRModel{eltype(net.S)}(net, x, dx, v, base, rng, Dict())
+    return HRModel{eltype(net.S)}(net, x, dx, v, base, rng, Dict())
 end

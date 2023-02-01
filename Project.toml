@@ -9,10 +9,9 @@ GLPK = "60bf3e95-4087-53dc-ae20-288a0d20c6a6"
 JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 MetXBase = "0b8c4419-604a-4c8e-9eed-0f79de4a140e"
+MetXNetHub = "be9415a8-24b2-49ae-ba75-41eeaa9f722f"
 MetXOptim = "672bf490-d3aa-44fe-a664-43445036b9de"
-Mmap = "a63ad114-7e13-5084-954f-fe012c677804"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
-RunTestsEnv = "aeeda050-7d39-4c85-b6eb-65567cadcf4d"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 
 [compat]

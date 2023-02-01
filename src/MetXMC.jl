@@ -10,10 +10,16 @@ module MetXMC
     import Distributions
 
     #! include Types
-    include("Types/MetHRModel.jl")
+    include("Types/HRModel.jl")
+    include("Types/MC0Model.jl")
     
-    #! include MetHRModelUtils
-    include("MetHRModelUtils/sample.jl")
+    #! include HRModelUtils
+    include("HRModelUtils/interfaces.jl")
+    include("HRModelUtils/sample.jl")
+    
+    #! include MC0ModelUtils
+    include("MC0ModelUtils/interfaces.jl")
+    include("MC0ModelUtils/sample.jl")
 
     #! include .
 
