@@ -1,14 +1,15 @@
 
 export HRModel
-struct HRModel{T}
+struct HRModel{T} <: AbstractHitOrDropSampler where {T<:AbstractFloat}
     # net
     net::MetNet
 
     # sample! stuf
-    x::Vector{T}
-    dx::Vector{T}
-    v::Vector{T}
-    base::Matrix{T}
+    v::Vector{T}                # position
+    dv::Vector{T}               # step
+    r::Vector{T}                # rand direction
+    base::Matrix{T}             # nullspace(net.S)
+
     rng::Random.AbstractRNG
 
     # extras
@@ -17,10 +18,10 @@ end
 
 function HRModel(net::MetNet, jump_args...; rng = Random.GLOBAL_RNG)
 
-    x = warmup(net.S, net.b, net.lb, net.ub, jump_args...)
-    dx = zeros(length(x))
-    v = zeros(length(x))
+    v = _warmup(net.S, net.b, net.lb, net.ub, jump_args...)
+    dv = zeros(length(v))
+    r = zeros(length(v))
     base = nullspace(_dense(net.S))
     
-    return HRModel{eltype(net.S)}(net, x, dx, v, base, rng, Dict())
+    return HRModel{eltype(net.S)}(net, v, dv, r, base, rng, Dict())
 end

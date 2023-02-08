@@ -1,12 +1,31 @@
+# ------------------------------------------------------------------
+struct MultivariateUniform{T} 
+    v0::Vector{T}
+    Δv::Vector{T}
+
+    MultivariateUniform(lb::Vector{T}, ub::Vector{T}) where T = new{T}(lb, ub - lb)
+end
+
+import Base.rand
+rand(rng::Random.AbstractRNG, d::MultivariateUniform) = d.v0 .+ rand(rng, length(d.Δv)) .* d.Δv
+
+import Distributions.pdf
+pdf(::MultivariateUniform{T}, x) where T = one(T)
+
+## ------------------------------------------------------------------
 export MC0Model
-struct MC0Model{T}
+struct MC0Model{T} <: AbstractHitOrDropSampler where {T<:AbstractFloat}
     # net
     enet::EchelonMetNet
 
     # sample! stuf
-    x::Vector{T}
-    vf::Vector{T}
+    v::Vector{T}
+    vi::Vector{T}
+
     rng::Random.AbstractRNG
+
+    # Default sampler
+    U::MultivariateUniform{T}
 
     # extras
     extras::Dict
@@ -18,10 +37,15 @@ function MC0Model(enet::EchelonMetNet;
     )
     
     Nf, Nd = length(enet.idxf), length(enet.idxd)
-    x, vf = zeros(Nf + Nd), zeros(Nf)
-    
+    v, vi = zeros(Nf + Nd), zeros(Nf)
+
     T = eltype(enet.net.S)
-    return MC0Model{T}(enet, x, vf, rng, Dict())
+    U = MultivariateUniform(
+        Vector{T}(enet.net.lb[enet.idxf]), 
+        Vector{T}(enet.net.ub[enet.idxf])
+    )
+    
+    return MC0Model{T}(enet, v, vi, rng, U, Dict())
 end
 
 function MC0Model(net::MetNet; 
