@@ -10,6 +10,7 @@
 end
 
 # TODO: Positive define net (struct)
+
 ## ------------------------------------------------------------------
 let
     fn = "/Users/Pereiro/Downloads/HEK293.mat"
@@ -32,7 +33,7 @@ end
 # TODO: Support maxent sampling exp(βx)
 ## ------------------------------------------------------------------
 # Utils
-# TODO: package this
+# TODO: This is wrong!!! Fix it on MetXPlots
 function _plot_marginal!(p::AbstractPlot, epm::FluxEPModelT0, rxn; 
         pkwargs...
     )

@@ -1,3 +1,5 @@
+# TODO: add burnin samples kwarg option see [[@wilhelmTmvtnormPackageTruncated2010]]
+
 
 export HRModel
 struct HRModel{T} <: AbstractHitOrDropSampler where {T<:AbstractFloat}
