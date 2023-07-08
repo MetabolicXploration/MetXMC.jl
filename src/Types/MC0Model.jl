@@ -15,8 +15,8 @@ pdf(::MultivariateUniform{T}, x) where T = one(T)
 ## ------------------------------------------------------------------
 export MC0Model
 struct MC0Model{T} <: AbstractHitOrDropSampler where {T<:AbstractFloat}
-    # net
-    enet::EchelonMetNet
+    # lep
+    elep::EchelonLEPModel
 
     # sample! stuf
     v::Vector{T}
@@ -32,26 +32,26 @@ struct MC0Model{T} <: AbstractHitOrDropSampler where {T<:AbstractFloat}
 
 end
 
-function MC0Model(enet::EchelonMetNet; 
+function MC0Model(elep::EchelonLEPModel; 
         rng = Random.GLOBAL_RNG
     )
     
-    Nf, Nd = length(enet.idxf), length(enet.idxd)
+    Nf, Nd = length(elep.idxf), length(elep.idxd)
     v, vi = zeros(Nf + Nd), zeros(Nf)
 
-    T = eltype(enet.net.S)
+    T = eltype(elep.lep.S)
     U = MultivariateUniform(
-        Vector{T}(enet.net.lb[enet.idxf]), 
-        Vector{T}(enet.net.ub[enet.idxf])
+        Vector{T}(elep.lep.lb[elep.idxf]), 
+        Vector{T}(elep.lep.ub[elep.idxf])
     )
     
-    return MC0Model{T}(enet, v, vi, rng, U, Dict())
+    return MC0Model{T}(elep, v, vi, rng, U, Dict())
 end
 
-function MC0Model(net::MetNet; 
+function MC0Model(lep::LEPModel; 
         rng = Random.GLOBAL_RNG, 
         echtol = 1e-10
     )
-    enet = EchelonMetNet(net; tol = echtol)
-    return MC0Model(enet; rng)
+    elep = EchelonLEPModel(lep; tol = echtol)
+    return MC0Model(elep; rng)
 end

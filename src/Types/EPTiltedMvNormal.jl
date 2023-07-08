@@ -39,7 +39,7 @@ function EPTiltedMvNormal(epm::FluxEPModelT0{T}, rxn;
     _lb, _ub = lb(epm, rxni), ub(epm, rxni) # This is already rescaled
     
     # extras
-    # TODO: Add some net extras
+    # TODO: Add some lep extras
     extras = Dict()
 
     EPTiltedMvNormal{T}(Qi, be, G, idxi, idxd, rxni, _lb, _ub, v, vi, rng, extras)

@@ -1,7 +1,7 @@
 # _hit_or_drop!(s::AbstractHitOrDropSampler, span::Bool)
 # This is the main interface method of AbstractHitOrDropSampler
 # sample! the Sampler and return a weight.
-# If the weight == 0.0 the sample is droped
+# If the weight == 0.0 the sample shoulf be droped
 _hit_or_drop!(m::AbstractHitOrDropSampler, ::Bool) = error("_hit_or_drop!($(typeof(m)), ::Bool) not implemented")
 
 ## ------------------------------------------------------------------

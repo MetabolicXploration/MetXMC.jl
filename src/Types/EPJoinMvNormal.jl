@@ -34,7 +34,7 @@ function EPJoinMvNormal(epm::FluxEPModelT0{T};
     v = zeros(Nd + Ni)
 
     # extras
-    # TODO: Add some net extras
+    # TODO: Add some lep extras
     extras = Dict()
 
     return EPJoinMvNormal{T}(Qi, be, G, idxi, idxd, v, vi, rng, extras)

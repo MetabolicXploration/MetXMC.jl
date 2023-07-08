@@ -37,7 +37,7 @@ function EPBoxedMvNormal(epm::FluxEPModelT0{T};
     _lb, _ub = lb(epm), ub(epm) # This is already rescaled
     
     # extras
-    # TODO: Add some net extras
+    # TODO: Add some lep extras
     extras = Dict()
 
 

@@ -34,7 +34,7 @@ module MetXMC
     include("AbstractHitOrDropSamplerBase/dist_interface.jl")
     include("AbstractHitOrDropSamplerBase/extras_interface.jl")
     include("AbstractHitOrDropSamplerBase/hd_interface.jl")
-    include("AbstractHitOrDropSamplerBase/net_interface.jl")
+    include("AbstractHitOrDropSamplerBase/lep_interface.jl")
     
     #! include EPJoinMvNormalBase
     include("EPJoinMvNormalBase/dist_interface.jl")

@@ -4,9 +4,9 @@ function _walk!(hrm::HRModel{T}, rng) where {T}
     v::Vector{T} = hrm.v            # position
     dv::Vector{T} = hrm.dv          # step
     r::Vector{T} = hrm.r            # rand direction
-    base::Matrix{T} = hrm.base      # nullspace(net.S)
-    lb::Vector{T} = hrm.net.lb
-    ub::Vector{T} = hrm.net.ub
+    base::Matrix{T} = hrm.base      # nullspace(lep.S)
+    lb::Vector{T} = hrm.lep.lb
+    ub::Vector{T} = hrm.lep.ub
     damp::Float64 = config(hrm, :damp, 1.0)::Float64
     
     n = length(v)
@@ -55,11 +55,11 @@ end
 #         rng = hrm.rng,
 #         rxns = nothing
 #     ) 
-#     rxns = isnothing(rxns) ? rxns : rxnindex(hrm.net, rxns)
+#     rxns = isnothing(rxns) ? rxns : rxnindex(hrm.lep, rxns)
 #     return _sample!(hrm, rxns, nsamples, dt, rng)
 # end
 
 # function sample!(hrm::HRModel; rxns = nothing, rng = hrm.rng)
-#     rxns = isnothing(rxns) ? rxns : rxnindex(hrm.net, rxns)
+#     rxns = isnothing(rxns) ? rxns : rxnindex(hrm.lep, rxns)
 #     return _sample!(hrm, rxns, rng)
 # end

@@ -4,7 +4,7 @@ function _warmup(S, b, lb, ub, jump_args...)
     T = eltype(S)
     M, N = size(S)
     c = zeros(T, N)
-    opm = FBAFluxOpModel(S, b, lb, ub, c, jump_args...)
+    opm = FBAOpModel(S, b, lb, ub, c, jump_args...)
     v0 = zeros(T, N)
     c0, c1 = zero(T), one(T)
 

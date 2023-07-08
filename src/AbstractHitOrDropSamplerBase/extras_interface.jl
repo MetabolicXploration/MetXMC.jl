@@ -3,6 +3,7 @@
 import MetXBase.extras
 extras(m::AbstractHitOrDropSampler)::Dict = m.extras
 
+# TODO: Revise this
 # -------------------------------------------------------------------
 # config interface
 @extras_dict_interface AbstractHitOrDropSampler config
@@ -12,8 +13,6 @@ extras(m::AbstractHitOrDropSampler)::Dict = m.extras
 @extras_dict_interface AbstractHitOrDropSampler state
 
 # -------------------------------------------------------------------
-# net interface
+# lep data
 # NOTE: Do not interface with the net the data that will be in the constraints
-
-# net data
-@extras_val_interface AbstractHitOrDropSampler metnet MetNet
+lepmodel(m::AbstractHitOrDropSampler) = m.lep
