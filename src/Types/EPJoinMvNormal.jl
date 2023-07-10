@@ -1,4 +1,4 @@
-export EPJoinMvNormal
+
 struct EPJoinMvNormal{T} <: AbstractHitOrDropSampler where {T<:AbstractFloat}
     
     # epm::FluxEPModelT0{T}

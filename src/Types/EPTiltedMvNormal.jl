@@ -1,4 +1,3 @@
-export EPTiltedMvNormal
 struct EPTiltedMvNormal{T} <: AbstractHitOrDropSampler where {T<:AbstractFloat}
 
     Qi::MultivariateNormal

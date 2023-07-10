@@ -1,4 +1,3 @@
-export EPBoxedMvNormal
 struct EPBoxedMvNormal{T} <: AbstractHitOrDropSampler where {T<:AbstractFloat}
 
     Qi::MultivariateNormal

@@ -66,7 +66,6 @@ end
 
 ## ------------------------------------------------------------------
 # TODO: Think about saparating 'wsample -> ws, samples' and 'sample -> samples'
-export sample!
 import Distributions.sample!
 function sample!(onhit::Function, mcm::AbstractHitOrDropSampler, niters; 
         ondrop::Function = _do_nothing, 
@@ -87,8 +86,6 @@ function sample!(mcm::AbstractHitOrDropSampler, nsamples::Int;
 end
 
 ## ------------------------------------------------------------------
-export sample_histogram!
-
 function sample_histogram!(
         mvn::AbstractHitOrDropSampler, rxni::Int, 
         bins::AbstractVector, hist::AbstractVector; 

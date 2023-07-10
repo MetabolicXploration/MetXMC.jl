@@ -64,7 +64,6 @@
 # _do_nothing(x...) = nothing
 
 # ## ------------------------------------------------------------------
-# export sample!
 # import Distributions.sample!
 # function sample!(onhit::Function, mcm::MC0Model, niters; 
 #         G = mcm.U,

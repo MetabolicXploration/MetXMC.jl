@@ -13,7 +13,6 @@ import Distributions.pdf
 pdf(::MultivariateUniform{T}, x) where T = one(T)
 
 ## ------------------------------------------------------------------
-export MC0Model
 struct MC0Model{T} <: AbstractHitOrDropSampler where {T<:AbstractFloat}
     # lep
     elep::EchelonLEPModel
@@ -36,13 +35,13 @@ function MC0Model(elep::EchelonLEPModel;
         rng = Random.GLOBAL_RNG
     )
     
-    Nf, Nd = length(elep.idxf), length(elep.idxd)
+    Nf, Nd = length(elep.idxi), length(elep.idxd)
     v, vi = zeros(Nf + Nd), zeros(Nf)
 
     T = eltype(elep.lep.S)
     U = MultivariateUniform(
-        Vector{T}(elep.lep.lb[elep.idxf]), 
-        Vector{T}(elep.lep.ub[elep.idxf])
+        Vector{T}(elep.lep.lb[elep.idxi]), 
+        Vector{T}(elep.lep.ub[elep.idxi])
     )
     
     return MC0Model{T}(elep, v, vi, rng, U, Dict())
