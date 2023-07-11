@@ -15,4 +15,6 @@ extras(m::AbstractHitOrDropSampler)::Dict = m.extras
 # -------------------------------------------------------------------
 # lep data
 # NOTE: Do not interface with the net the data that will be in the constraints
+
+import MetXBase.lepmodel
 lepmodel(m::AbstractHitOrDropSampler) = m.lep

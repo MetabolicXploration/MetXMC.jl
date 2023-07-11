@@ -50,4 +50,7 @@ module MetXMC
 
     #! include .
 
+    # exports
+    @_exportall_non_underscore()
+
 end

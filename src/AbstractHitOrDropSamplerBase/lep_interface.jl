@@ -6,3 +6,4 @@ function span!(mcm::AbstractHitOrDropSampler)
     mcm.v[mcm.idxi] .= mcm.vi
     return mcm.v
 end
+
