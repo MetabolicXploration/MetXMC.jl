@@ -86,6 +86,7 @@ function sample!(mcm::AbstractHitOrDropSampler, nsamples::Int;
 end
 
 ## ------------------------------------------------------------------
+# TODO: Redo this, use/create a Histogram object
 function sample_histogram!(
         mvn::AbstractHitOrDropSampler, rxni::Int, 
         bins::AbstractVector, hist::AbstractVector; 
@@ -106,17 +107,6 @@ function sample_histogram!(
         kwargs...
     )
 
-    hist = zeros(length(bins))
-    return sample_histogram!(mvn, rxni, bins, hist; kwargs...)
-end
-
-function sample_histogram!(
-        mvn::AbstractHitOrDropSampler, rxni::Int, 
-        v0::Real, v1::Real, nbins::Int; 
-        kwargs...
-    )
-
-    bins = range(v0, v1; length = nbins)
     hist = zeros(length(bins))
     return sample_histogram!(mvn, rxni, bins, hist; kwargs...)
 end
