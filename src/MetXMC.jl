@@ -3,6 +3,7 @@ module MetXMC
     using LinearAlgebra
     using SparseArrays, JuMP, GLPK
     using MetXBase
+    using MetXBase.MassExport
     using MetXBase: _dense, _histogram!
     using MetXOptim
     using MetXEP
@@ -51,6 +52,6 @@ module MetXMC
     #! include .
 
     # exports
-    @_exportall_non_underscore()
+    @exportall_non_underscore()
 
 end
