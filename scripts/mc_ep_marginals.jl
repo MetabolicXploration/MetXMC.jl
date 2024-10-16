@@ -21,7 +21,7 @@ end
 ## ------------------------------------------------------------------
 let
     global net = MetXNetHub.pull_net("iJO1366")
-    global net = box(net, GLPK.Optimizer)
+    global net = fva_strip(net, GLPK.Optimizer)
     lb0, ub0 = fva(net, GLPK.Optimizer; verbose = true)
     # sort(ub0 - lb0)
     # met_rxns(net, 1)
@@ -71,7 +71,7 @@ end
 let
     # global net = MetXNetHub.pull_net("ecoli_core")
     global net = MetXNetHub.pull_net("toy_net")
-    global net = box(net, GLPK.Optimizer)
+    global net = fva_strip(net, GLPK.Optimizer)
     global mcm = MetHRModel(net, GLPK.Optimizer)
     global epm = FluxEPModelT0(net)
     config!(epm, :epsconv, 1e-7)

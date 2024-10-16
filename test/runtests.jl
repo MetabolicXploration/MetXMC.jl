@@ -16,7 +16,7 @@ using Random
         model_id = "toy_net4D"
         net0 = pull_net(model_id)
         lep0 = lepmodel(net0)
-        lep = box(lep0, GLPK.Optimizer)
+        lep = fva_strip(lep0, GLPK.Optimizer)
         elep = EchelonLEPModel(lep; tol = 1e-10)
 
         data_pool = Dict()
