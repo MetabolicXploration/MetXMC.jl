@@ -1,7 +1,7 @@
 name = "MetXMC"
 uuid = "d4a97fa3-1e77-4085-814f-98651929ce7d"
 authors = ["The members of MetabolicXploration"]
-version = "0.2.0"
+version = "0.2.1"
 
 [deps]
 GLPK = "60bf3e95-4087-53dc-ae20-288a0d20c6a6"
