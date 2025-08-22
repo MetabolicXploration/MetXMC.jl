@@ -3,7 +3,7 @@ using MetXOptim
 using MetXBase
 using MetXBase: _isapprox, _histogram
 using MetXNetHub
-using GLPK
+using MetXOptim.GLPK
 using Test
 using Random
 
