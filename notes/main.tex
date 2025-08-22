@@ -1,0 +1,155 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath, amssymb, graphicx, hyperref}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Descrizione dettagliata dell'algoritmo \texttt{minover}}
+\author{Autore}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduzione}
+L'algoritmo \texttt{minover} \`e un metodo iterativo per trovare un punto all'interno di un politopo definito da un insieme di vincoli lineari. L'algoritmo cerca il vincolo pi\`u violato e sposta la soluzione corrente in direzione per soddisfarlo, minimizzando lo scostamento rispetto ai limiti imposti.\newline
+Questo documento fornisce una descrizione dettagliata dell'algoritmo, analizzando ogni variabile e il suo ruolo nel processo.
+
+\section{Descrizione dell'algoritmo}
+L'algoritmo \texttt{minover} segue questi passaggi:
+
+\begin{enumerate}
+    \item Identificare il vincolo pi\`u violato, ovvero quello per cui la soluzione corrente \`e pi\`u lontana dai limiti imposti.
+    \item Calcolare un fattore di correzione per riportare la soluzione entro i limiti.
+    \item Applicare l'aggiornamento alla soluzione corrente.
+    \item Ripetere il processo finch\'e tutti i vincoli sono soddisfatti.
+\end{enumerate}
+
+\section{Definizione delle variabili}
+Le seguenti variabili sono utilizzate nell'implementazione:
+
+\begin{itemize}
+    \item \textbf{ok} ($\in \{0,1\}$): Flag che indica se tutti i vincoli sono soddisfatti ($ok=1$) o meno ($ok=0$).
+    \item \textbf{alpha} ($\alpha$): Fattore di aggiornamento utilizzato per correggere la soluzione.
+    \item \textbf{xmin}: Il valore minimo tra le violazioni dei vincoli.
+    \item \textbf{min}: Indice del vincolo pi\`u violato.
+    \item \textbf{sign} ($\pm1$): Indica se la correzione avviene verso l'alto o verso il basso.
+    \item \textbf{flux}: Vettore delle variabili della soluzione corrente.
+    \item \textbf{matrice}: Lista che memorizza gli indici delle variabili associate a ciascun vincolo.
+    \item \textbf{matrice2}: Lista dei coefficienti dei vincoli.
+    \item \textbf{boundmin, boundmax}: Limiti inferiore e superiore per ciascun vincolo.
+    \item \textbf{norm}: Norma della direzione di aggiornamento.
+\end{itemize}
+
+\section{Passaggi dettagliati}
+L'algoritmo esegue un ciclo finch\'e non trova una soluzione valida:
+
+\begin{enumerate}
+    \item Inizialmente, imposta $xmin$ ad un valore molto grande per identificare il vincolo pi\`u violato.
+    \item Per ogni vincolo $i$, calcola il valore di $x$ dato dalla combinazione lineare:
+    \begin{equation}
+        x = \sum_{j} \text{flux}[\text{matrice}[i][j]] \cdot \text{matrice2}[i][j]
+    \end{equation}
+    \item Calcola le distanze dai limiti inferiori e superiori:
+    \begin{equation}
+        x_1 = x - \text{boundmin}[i], \quad x_2 = \text{boundmax}[i] - x
+    \end{equation}
+    \item Se $x_1$ o $x_2$ sono i minimi rilevati, aggiorna $xmin$, $min$ e $sign$.
+    \item Se $xmin > 0$, termina l'algoritmo con $ok=1$.
+    \item Altrimenti, calcola la norma della direzione di aggiornamento:
+    \begin{equation}
+        \text{norm} = \sum_{j} \text{matrice2}[\text{min}][j]^2
+    \end{equation}
+    \item Aggiorna la soluzione corrente con:
+    \begin{equation}
+        \alpha = -1.8 \frac{xmin}{\text{norm}}, \quad \text{flux}[\text{matrice}[min][j]] += \text{sign} \cdot \alpha \cdot \text{matrice2}[min][j]
+    \end{equation}
+    \item Continua finch\'e tutti i vincoli sono soddisfatti.
+\end{enumerate}
+
+\section{Conclusioni}
+L'algoritmo \texttt{minover} \`e un metodo efficace per trovare un punto interno a un politopo rispettando i vincoli. L'approccio iterativo consente di correggere iterativamente le violazioni, rendendolo un metodo robusto per problemi di ottimizzazione con vincoli lineari.
+
+\end{document}
+
+
+% \documentclass[11pt, letterpaper]{article}
+
+% % -------------------------------------------------------------------------
+% % Commands
+% \usepackage[utf8]{inputenc}
+% \usepackage{graphicx}
+% \usepackage{hyperref}
+% \usepackage{cite}
+% \usepackage{vmargin}
+% \usepackage{lipsum}
+% \usepackage{amsmath}
+
+% \setmargins{2.5cm}                 % margen izquierdo
+% {1.5cm}                            % margen superior
+% {16.5cm}                           % anchura del texto
+% {23.42cm}                          % altura del texto
+% {10pt}                             % altura de los encabezados
+% {1cm}                              % espacio entre el texto y los encabezados
+% {0pt}                              % altura del pie de página
+% {2cm}                              % espacio entre el texto y el pie de página
+
+% % \hyphenation{}
+
+% % \hypersetup{colorlinks,%
+% % 	citecolor=blue,%s
+% % 	filecolor=blue,%
+% % 	linkcolor=blue,%
+% % 	urlcolor=blue%
+% % }
+
+
+% % -------------------------------------------------------------------------
+% \title{\textbf{$U_i$ dynamics}}
+
+% % -------------------------------------------------------------------------
+
+% \date{}
+% \author{
+%   % \textbf{Jos\'e A. Pereiro-Morej\'on$^{1,3}$, Roberto Mulet$^{1,2}$} \\
+%   % \small{1. Group of Complex Systems and Statistical Physics.} \\
+%   % \small{Physics Faculty, University of Havana, CP 10400. La Habana, Cuba} \\
+%   % \small{2. Department of Theoretical Physics, }\\
+%   % \small{Physics Faculty Faculty, University of Havana, CP 10400. La Habana, Cuba} \\
+%   % \small{3. Biology Faculty, University of Havana, CP 10400. La Habana, Cuba} \\
+% }
+
+% % -------------------------------------------------------------------------
+% % opening
+% \begin{document}
+
+% \maketitle
+
+% \begin{abstract}
+% 	\lipsum[2]
+% \end{abstract}
+
+% Baajskhdbck asdckjs dlajdbcliasd claksdc kjhaskdc \cite{pereiro-morejonInferenceMetabolicFluxes2022}. 
+% jshdkasjdh fkashdvf kasjdf, such as:
+
+% \begin{equation}
+%   U_i(t+1) = (1-\lambda)U_i(t) + \frac{\Gamma}{N} \sum_j s_j (t)
+% \end{equation}
+
+% \lipsum[2]:
+
+% \begin{figure}
+% 	\centering
+% 	\includegraphics[scale = 0.6]{images/helloWorld.png}
+% 	\caption{
+% 		\textbf{happy life}:
+%         ascdkjahdc asdcksab dckajshdclsahd cakjshbd cka. 
+% 	}
+% 	\label{fig:label}
+% \end{figure}
+
+% \bibliographystyle{plain}
+% \bibliography{main}
+	
+% \end{document}
